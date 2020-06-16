@@ -1,12 +1,11 @@
 import Vue from 'vue';
 import App from './App.vue';
+import './assets/css/main.styl';
+import './plugins/bootstrapVue';
+import './plugins/fontAwesome';
 import router from './router';
 import store from './store';
-import BootstrapVue from 'bootstrap-vue';
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap-vue/dist/bootstrap-vue.css';
 
-Vue.use(BootstrapVue);
 Vue.config.productionTip = false;
 
 new Vue({
@@ -17,7 +16,7 @@ new Vue({
     },
     methods: {
         init() {
-            store.dispatch('oauth/getToken', null, { root: true });
+            store.dispatch('oauth/getToken');
         },
     },
     render: (h) => h(App),
