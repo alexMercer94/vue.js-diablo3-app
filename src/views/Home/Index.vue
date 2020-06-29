@@ -1,12 +1,19 @@
 <template>
     <div class="home">
-        <h1>Home</h1>
+        <HomeTitle />
+        <MainForm />
     </div>
 </template>
 
 <script>
+import HomeTitle from './HomeTitle';
+import MainForm from './HomeForm';
+
 export default {
     name: 'Home',
-    components: {},
+    components: {
+        HomeTitle,
+        MainForm,
+    },
 };
 </script>
