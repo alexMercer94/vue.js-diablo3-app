@@ -14,12 +14,6 @@
         </b-table>
     </div>
 </template>
-        </b-table>
-    </div>
-</template>
-        </b-table>
-    </div>
-</template>
 
 <script>
 import HeroIco from './HeroIco';

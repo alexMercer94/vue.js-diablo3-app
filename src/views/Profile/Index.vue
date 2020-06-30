@@ -1,42 +1,64 @@
 <template>
-    <div>
-        <BaseLoadng v-if="isLoading" />
-        <template v-if="profileData">
+    <div class="profile-view">
+        <BaseLoading v-if="isLoading" />
+        <template v-if="profileData !== null">
             <MainBlock :profile-data="profileData" />
+            <ArtisansBlock :artisans-data="artisansData" />
         </template>
     </div>
 </template>
 
 <script>
-import { getApiAccount } from '@/api/search';
 import setError from '@/mixins/setError';
-import BaseLoadng from '@/components/BaseLoading';
+import { getApiAccount } from '@/api/search';
+
+import BaseLoading from '@/components/BaseLoading';
 import MainBlock from './MainBlock/Index';
+import ArtisansBlock from './ArtisansBlock/Index';
 
 export default {
     name: 'ProfileView',
     mixins: [setError],
     components: {
-        BaseLoadng,
-        MainBlock
+        BaseLoading,
+        MainBlock,
+        ArtisansBlock
     },
     data() {
         return {
-            profileData: null,
-            isLoading: false
+            isLoading: false,
+            profileData: null
         };
+    },
+    computed: {
+        artisansData() {
+            return {
+                blacksmith: this.profileData.blacksmith,
+                blacksmithHardcore: this.profileData.blacksmithHardcore,
+                jeweler: this.profileData.jeweler,
+                jewelerHardcore: this.profileData.jewelerHardcore,
+                mystic: this.profileData.mystic,
+                mysticHardcore: this.profileData.mysticHardcore
+            };
+        }
     },
     created() {
         this.isLoading = true;
         const { region, battleTag: account } = this.$route.params;
-        this.fetchDataAccount(region, account);
+        this.fetchData(region, account);
     },
     methods: {
         /**
-         * Get account's data from API
+         * Obtener los datos de la API
+         * Guardarlos en 'profileData'
+         * @param region {String}
+         * @param account {String}
          */
-        fetchDataAccount(region, account) {
-            getApiAccount({ region, account })
+        fetchData(region, account) {
+            getApiAccount({
+                region,
+                account
+            })
                 .then(({ data }) => {
                     this.profileData = data;
                 })
@@ -46,12 +68,10 @@ export default {
                         routeParams: this.$route.params,
                         message: err.message
                     };
-
                     if (err.response) {
                         errObj.data = err.response.data;
                         errObj.status = err.response.status;
                     }
-
                     this.setApiErr(errObj);
                     this.$router.push({ name: 'Error' });
                 })

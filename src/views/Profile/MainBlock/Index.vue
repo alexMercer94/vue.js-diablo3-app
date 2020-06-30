@@ -3,19 +3,26 @@
         <div class="grid-item item-left">
             <TopHeroes v-if="hasHeroes" :heroes="topHeroes" />
             <HeroesList v-if="hasHeroesList" :heroes="heroesList" />
+            <ProgressList :acts="profileData.progression" />
         </div>
-        <div class="grid-item item-right">Derecha</div>
+        <div class="grid-item item-right">
+            <PlayerStats :stats="statsData" />
+        </div>
     </div>
 </template>
 <script>
 import TopHeroes from './TopHeroes/Index';
 import HeroesList from './HeroesList/Index';
+import ProgressList from './ProgressList/Index';
+import PlayerStats from './PlayerStats/Index';
 
 export default {
     name: 'MainBlock',
     components: {
         TopHeroes,
-        HeroesList
+        HeroesList,
+        ProgressList,
+        PlayerStats
     },
     props: {
         profileData: {
@@ -50,6 +57,10 @@ export default {
                 3,
                 this.profileData.heroes.length
             );
+        },
+        statsData() {
+            const { paragonLevel, kills, timePlayed } = this.profileData;
+            return { paragonLevel, kills, timePlayed };
         }
     }
 };
