@@ -1,8 +1,8 @@
 import { post } from 'axios';
 
 // Credentials
-const clientId = 'f7a2b59d742e442d9f98c178c7a36d68';
-const clientSecret = 'HqO295FD1chgL0bjE3dTnCA3dxyFQxCW';
+const clientId = process.env.VUE_APP_CLIENT_ID;
+const clientSecret = process.env.VUE_APP_CLIENT_SECRET;
 
 const region = 'eu';
 const API_URL = `https://${region}.battle.net/oauth/token`;
@@ -16,7 +16,7 @@ const getToken = () => {
 
     const config = {
         headers: { 'Content-Type': 'multipart/formdata' },
-        auth: { username: clientId, password: clientSecret },
+        auth: { username: clientId, password: clientSecret }
     };
 
     return post(API_URL, body, config);
