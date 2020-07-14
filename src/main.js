@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import App from './App.vue';
 import './assets/css/main.styl';
+import './directives';
 import './plugins/bootstrapVue';
 import './plugins/fontAwesome';
 import router from './router';
@@ -17,7 +18,7 @@ new Vue({
     methods: {
         init() {
             store.dispatch('oauth/getToken');
-        },
+        }
     },
-    render: (h) => h(App),
+    render: h => h(App)
 }).$mount('#app');
